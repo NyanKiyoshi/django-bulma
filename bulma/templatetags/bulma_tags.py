@@ -19,19 +19,19 @@ register = template.Library()
 BULMA_COLUMN_COUNT = 1
 
 
-@register.filter
+@register.simple_tag
 def bulma(element):
     markup_classes = {'label': '', 'value': '', 'single_value': ''}
     return render(element, markup_classes)
 
 
-@register.filter
+@register.simple_tag
 def bulma_inline(element):
     markup_classes = {'label': 'sr-only', 'value': '', 'single_value': ''}
     return render(element, markup_classes)
 
 
-@register.filter
+@register.simple_tag
 def bulma_horizontal(element, label_cols='is-2'):
     markup_classes = {'label': label_cols, 'value': '', 'single_value': ''}
 
