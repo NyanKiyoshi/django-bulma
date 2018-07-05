@@ -1,0 +1,14 @@
+{% load i18n %}
+
+{% if form.non_field_errors %}
+  <div class="message is-danger">
+    <div class="message-header">
+      {% trans 'Errors' context 'Form error section title' %}
+    </div>
+    <div class="message-body">
+      {% for non_field_error in form.non_field_errors %}
+        {{ non_field_error }}
+      {% endfor %}
+    </div>
+  </div>
+{% endif %}
