@@ -20,19 +20,19 @@ BULMA_COLUMN_COUNT = 1
 
 
 @register.simple_tag
-def bulma(element):
+def bulma(element, **kwargs):
     markup_classes = {'label': '', 'value': '', 'single_value': ''}
-    return render(element, markup_classes)
+    return render(element, markup_classes, **kwargs)
 
 
 @register.simple_tag
-def bulma_inline(element):
+def bulma_inline(element, **kwargs):
     markup_classes = {'label': 'sr-only', 'value': '', 'single_value': ''}
-    return render(element, markup_classes)
+    return render(element, markup_classes, **kwargs)
 
 
 @register.simple_tag
-def bulma_horizontal(element, label_cols='is-2'):
+def bulma_horizontal(element, label_cols='is-2', **kwargs):
     markup_classes = {'label': label_cols, 'value': '', 'single_value': ''}
 
     for cl in label_cols.split(' '):
@@ -54,7 +54,7 @@ def bulma_horizontal(element, label_cols='is-2'):
 
         markup_classes['value'] += ' ' + '-'.join(splitted_class)
 
-    return render(element, markup_classes)
+    return render(element, markup_classes, **kwargs)
 
 
 @register.filter
@@ -66,13 +66,15 @@ def add_input_classes(field):
         field.field.widget.attrs['class'] = field_classes
 
 
-def render(element, markup_classes):
+def render(element, markup_classes, **kwargs):
     element_type = element.__class__.__name__.lower()
 
     if element_type == 'boundfield':
         add_input_classes(element)
         template = get_template("bulma/forms/field.html")
-        context = {'field': element, 'classes': markup_classes, 'form': element.form}
+        context = {
+            'field': element, 'classes': markup_classes, 'form': element.form,
+            **kwargs}
     else:
         has_management = getattr(element, 'management_form', None)
         if has_management:
@@ -81,13 +83,15 @@ def render(element, markup_classes):
                     add_input_classes(field)
 
             template = get_template("bulma/forms/formset.html")
-            context = {'formset': element, 'classes': markup_classes}
+            context = {
+                'formset': element, 'classes': markup_classes, **kwargs}
         else:
             for field in element.visible_fields():
                 add_input_classes(field)
 
             template = get_template("bulma/forms/form.html")
-            context = {'form': element, 'classes': markup_classes}
+            context = {
+                'form': element, 'classes': markup_classes, **kwargs}
 
     return template.render(context)
 

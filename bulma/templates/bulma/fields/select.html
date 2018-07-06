@@ -1,8 +1,10 @@
 {% load bulma_tags %}
 
 <div class="field">
-  <label class="label {{ classes.label }}
-      {% if field.field.required %}{{ form.required_css_class }}{% endif %}">{{ field.label }}</label>
+  {% if not hide_label %}
+    <label class="label {{ classes.label }}
+        {% if field.field.required %}{{ form.required_css_class }}{% endif %}">{{ field.label }}</label>
+  {% endif %}
   <div class="control {{ classes.value }}">
     <span class="select{% if field|is_multiple_select %} is-multiple{% endif %}{% if field.errors|length > 0 %} is-danger{% endif %}">
       {{ field }}
