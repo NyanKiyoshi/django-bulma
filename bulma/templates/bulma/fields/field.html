@@ -1,7 +1,7 @@
 {% load bulma_tags %}
 
 <div class="field">
-  {% if not hide_label and field.auto_id %}
+  {% if not hide_label and field.auto_id and field.label %}
     <label class="label {{ classes.label }} {% if field.field.required %}{{ form.required_css_class }}{% endif %}"
            for="{{ field.auto_id }}">{{ field.label }}</label>
   {% endif %}

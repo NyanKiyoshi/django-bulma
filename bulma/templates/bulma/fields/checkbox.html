@@ -1,6 +1,6 @@
 <div class="field">
   <div class="control {{ classes.single_value }}">
-    {% if not hide_label and field.auto_id %}
+    {% if not hide_label and field.auto_id and field.label %}
       <label
           class="checkbox {{ classes.label }} {% if field.field.required %}{{ form.required_css_class }}{% endif %}">
         {{ field }} {{ field.label }}
